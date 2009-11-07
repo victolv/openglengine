@@ -1,0 +1,3 @@
+void initTest();
+
+void Exit();
