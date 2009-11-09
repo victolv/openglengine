@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "gmScript/dataTypes.h"
-#include "gmScript/functions.h"
+#include "gmScript/func.h"
 
 using namespace std;
 
@@ -23,7 +23,12 @@ dataType* temp[2];
 temp[0] = new dataType(1);
 temp[1] = new dataType(2);
 
-GMSasdf.exec(1,2);
+dataType var1 = 1;
+dataType var2 = 2;
+
+std::cout << &var1 << "\t" << &var2 << std::endl;
+
+GMSasdf.exec(&var1,&var2);
 //GMSasdf.exec(temp);
 //DevHC @ Freenode
 }
