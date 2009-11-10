@@ -14,7 +14,7 @@ public:
 	int theReturn;
 public:
 	function(void* func,int* Parameters,int parameternum,int Return,char* Name);
-	dataType* exec(...); //neemt *dataType als parameter
+	dataType* exec(dataType* args[]); //neemt *dataType als parameter
 };	
 
 #endif

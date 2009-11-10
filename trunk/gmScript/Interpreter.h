@@ -2,7 +2,7 @@
 #define INTERPRETER_H
 
 #include "dataTypes.h"
-#include "functions.h"
+#include "func.h"
 #include "../GUI/simpleGUI.h"
 
 extern gui*		consoleWindow;

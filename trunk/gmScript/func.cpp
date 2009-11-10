@@ -9,6 +9,7 @@ function::function(void* func,int* Parameters,int parameternum,int Return,char* 
 	parameterNum = parameternum;
 	theReturn = Return;
 	name = Name;
+	parameterSize = 0;
 
 	for(int i = 0;i< parameterNum;i++){
 		switch(Parameters[i])
@@ -25,35 +26,35 @@ function::function(void* func,int* Parameters,int parameternum,int Return,char* 
 	}
 }
 
-dataType* function::exec(...){
-	dataType* varObj[100];//test , placeholder
+dataType* function::exec(dataType* args[]){
 	char paramData[1000];//ook test
+	int size = 0;
 
-	va_list listPointer;
-	va_start(listPointer, parameterNum);
 	for(int i = 0;i < parameterNum;i++)
 	{
-		varObj[i] = va_arg(listPointer, dataType*);
-		memcpy(paramData, varObj[i]->var, varObj[i]->size);
+		memcpy(&paramData[size], args[i]->var, args[i]->size);
+		size += args[i]->size;
 	}
 	//va_end;
-
+	int dataLoc = (int)&paramData;
 	int location = (int)theFunc;
 	//ecx counter
 	_asm{
-		mov eax, parameterSize;
-		cmp eax,0;
+		mov eax, 0;
+		cmp eax,parameterSize;
 		je caller;
 		sub esp, parameterSize;
-		mov ecx, location;
+		mov edx, 0;
+		mov ecx, dataLoc;//ecx = function
 pusher:
-		mov al, byte ptr[ecx+edx];
+		mov al, byte ptr[ecx+edx];//ecx =
 		mov byte ptr[esp+edx], al;
 		inc edx;
-		cmp edx, parameterSize;
+		cmp edx, parameterSize;//enough bytes pushed?
 		jne Pusher;
 caller:
-		call location;
+		call location;//function
+		add esp, parameterSize;//restore stack
 	}
 
 	//return////////
