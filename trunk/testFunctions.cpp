@@ -19,12 +19,19 @@ void asdf1(int a, int b, int c, int d)
 	std::cout << a << ", " << b << ", " << c << ", " << d << std::endl;
 }
 
+void helloWorld(){
+	std::cout << "Hello World!\n";
+}
+
+
 void initTest(){
 
 int tempa[2] = {INT,INT};
 int tempb[] = {INT,INT,INT,INT};
-function GMSasdf(asdf,tempa,2,VOID,"asdf");
-function GMSasdf1(asdf1,tempb,4,VOID,"asdf1");
+int param = VOID;
+function* GMSasdf = new function(asdf,tempa,2,VOID,"asdf");
+function* GMSasdf1 = new function(asdf1,tempb,4,VOID,"asdf1");
+function* GMSHello = new function(helloWorld,&param,0,VOID,"hey");
 dataType* temp[2];
 
 dataType var1 = 1;
@@ -41,8 +48,8 @@ dataType* dataPointer1[] =
 
 std::cout << &var1 << "\t" << &var2 << std::endl;
 
-GMSasdf.exec(dataPointer);
-GMSasdf1.exec(dataPointer1);
+GMSasdf->exec(dataPointer);
+GMSasdf1->exec(dataPointer1);
 //GMSasdf.exec(temp);
 //DevHC @ Freenode
 }

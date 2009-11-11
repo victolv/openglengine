@@ -1,13 +1,12 @@
 #ifndef FUNC_H
 #define FUNC_H
 #include <cstdarg>
+#include <list>
 #include "dataTypes.h"
 
-class function
-{
+class function : public data{
 public:
 	void* theFunc;
-	char* name;
 	int* parameterList;
 	int parameterNum;
 	int parameterSize;
@@ -16,5 +15,6 @@ public:
 	function(void* func,int* Parameters,int parameternum,int Return,char* Name);
 	dataType* exec(dataType* args[]); //neemt *dataType als parameter
 };	
+extern std::list<function*> GMSfunctions;
 
 #endif

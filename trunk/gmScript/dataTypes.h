@@ -12,13 +12,18 @@
 #define CHAR 4
 #define UNKNOWN 60
 
-class dataType{
+class data{
+public:
+const char* name; 
+};
+
+
+class dataType : public data{
 public:
 int index;
 public:
 int size;
 int type;
-const char* name;
 void* var;
 //dataType(char value);
 dataType(int value);
@@ -33,6 +38,7 @@ dataType& operator=(const dataType value);
 dataType& findVar(const char* name);
 
 extern std::list<dataType> variables;
+
 
 
 /*

@@ -43,7 +43,10 @@ return 1;
 bool Interpreter::handleVar(const char* script)
 {
 	if(strncmp(script, "int",3) == 0)
-	{	//
+	{	
+		//is het een functie?
+		/////////////////////////////////////////////
+		//
 		//is het een initialisatie?
 		//
 		int index;
@@ -83,6 +86,16 @@ bool Interpreter::handleVar(const char* script)
 //////////////////////////////////////////////////////////....bezig!!...////////////////////////////////////////////////////////
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		//int count = 0;
+
+		if(strip.GMSisFunction(script))
+		{	
+			function* temp = strip.findFunction(&script[strip.results.index1]);
+			if(temp != 0)
+			{}
+			dataType* a;
+				temp->exec(&a/*strip.findFuncArgs*/);
+		}
+
 
 				int tempif = strip.findCharRetIndex(script, '=');
 				if(tempif != -1){

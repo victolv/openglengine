@@ -96,9 +96,35 @@ int Strip::findCharRetIndex(const char* text, char symbol)
 	int i = 0;
 	while(*text != symbol){
 		i++;
-		if(text == '\0')
+		if(*text == '\0' || *text == ';')
 			return -1;
 		text++;
 	}
 return i;
+}
+
+
+bool Strip::GMSisFunction(const char* string){
+	int index = 0;
+	for(index;*string == isalnum(*string);string++,index++){
+	}
+	results.index1 = index;
+		//ok, string wijst nu naar een letter/cijfer.
+
+	for(const char* pointer = string;isalnum(*pointer) || isspace(*pointer) || *pointer == '(';pointer++){
+		if(*pointer == '('){
+		results.index2 = index; 
+		return true;
+		}
+	}
+	return false;
+}
+
+function* Strip::findFunction(const char* string){
+		for(std::list<function*>::iterator it = GMSfunctions.begin();it != GMSfunctions.end();it++)	{
+		if(isStringPresent((*it)->name,string))
+			return (*it);
+
+		}
+	return 0;
 }

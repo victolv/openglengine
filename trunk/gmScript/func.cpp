@@ -1,11 +1,13 @@
 #include "func.h"
 
 
+std::list<function*> GMSfunctions;
 
 function::function(void* func,int* Parameters,int parameternum,int Return,char* Name)
 {
 	theFunc = func;
-	parameterList = Parameters;
+	parameterList = new int[parameternum];
+	memcpy(parameterList, Parameters,sizeof(int)*parameternum);
 	parameterNum = parameternum;
 	theReturn = Return;
 	name = Name;
@@ -24,6 +26,7 @@ function::function(void* func,int* Parameters,int parameternum,int Return,char* 
 		default: parameterSize += sizeof(void*);
 		}
 	}
+	GMSfunctions.push_back(this);
 }
 
 dataType* function::exec(dataType* args[]){
