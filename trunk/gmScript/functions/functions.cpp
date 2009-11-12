@@ -2,13 +2,11 @@
 #include "../dataTypes.h"
 
 bool isStringPresent(const char* string1, const char* string2){
-	bool status;
 	for(int i = 0;string1 != '\0' && string2 != '\0' && isalnum(string2[i]);i++){
-		if(string1[i] == string2[i])
-		status = true;
-		else status = false;
+		if(string1[i] != string2[i])
+			return false;
 	}
-	return status;
+	return true;
 }
 
 dataType* GMScalculateString(const char* math)

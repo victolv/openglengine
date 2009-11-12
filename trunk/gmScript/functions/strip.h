@@ -24,6 +24,8 @@ public:
 
 	bool GMSisFunction(const char* string);
 	function* findFunction(const char* string);
+	dataType** findFuncArgs(const char* functionArgs);
+
 	//char findChar(char* string, char find, int until);	//until = tot alphabet letter, of cijfer, teken etc
 	//char findChar(char* string, char findRange1, findRange2, int until);
 }extern strip;

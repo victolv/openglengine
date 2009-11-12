@@ -1,10 +1,11 @@
 #include "datatypes.h"
+#include "functions/functions.h"
 
 std::list<const char*> stringTable;
 std::vector<void*> addresTable;
 std::vector<int> typeTable;
 
-std::list<dataType> variables;
+std::list<dataType*> variables;
 //std::list<dataTypeObjects> objects;
 
 dataType::dataType(int value){
@@ -19,7 +20,7 @@ dataType::dataType(int value, const char* name){
 	var = new int;
 	*(int*)var = value;
 	this->name = name;
-	variables.push_back(*this);
+	variables.push_back(this);
 	size = sizeof(int);
 }
 
@@ -31,22 +32,22 @@ dataType::dataType(void* value){
 dataType::dataType(void* value, const char* name){
 	var = value;
 	this->name = name;
-	variables.push_back(*this);
+	variables.push_back(this);
 	size = sizeof(int);
 }
 
-dataType& findVar(const char* name)
+dataType* findVar(const char* name)
 {
 	int i = 0;
 	char* c = (char*)name;
 
- 	for(c;!isalpha(*c);c++)
+ 	for(c;!isalpha(*c) && *c != '\0';c++)
 	{}
 	while(isalnum(*(c + i)))
 		i++;
 
-	for(std::list<dataType>::iterator it = variables.begin();it != variables.end();it++)	{
-		if(!strncmp(it->name, c,i))
+	for(std::list<dataType*>::iterator it = variables.begin();it != variables.end();it++)	{
+		if(isStringPresent((*it)->name, c))
 			return (*it);
 	}
 }

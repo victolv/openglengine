@@ -35,9 +35,9 @@ dataType& operator=(const char* value);
 dataType& operator=(const dataType value);
 //dataType& operator=(const void* value);
 };
-dataType& findVar(const char* name);
+dataType* findVar(const char* name);
 
-extern std::list<dataType> variables;
+extern std::list<dataType*> variables;
 
 
 

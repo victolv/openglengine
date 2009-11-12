@@ -90,10 +90,10 @@ bool Interpreter::handleVar(const char* script)
 		if(strip.GMSisFunction(script))
 		{	
 			function* temp = strip.findFunction(&script[strip.results.index1]);
-			if(temp != 0)
-			{}
-			dataType* a;
-				temp->exec(&a/*strip.findFuncArgs*/);
+			if(temp != 0){
+				dataType* a;
+				temp->exec(strip.findFuncArgs(&script[strip.results.index2]));
+			}
 		}
 
 

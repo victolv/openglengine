@@ -87,7 +87,7 @@ dataType* Strip::GMSfindVar(const char* command, int varCount){
 		if(isdigit(*ctemp))
 		return new dataType(atoi(ctemp));
 		else if(isalpha(*ctemp))
-		return &findVar(ctemp);
+		return findVar(ctemp);
 }
 
 
@@ -111,12 +111,13 @@ bool Strip::GMSisFunction(const char* string){
 	results.index1 = index;
 		//ok, string wijst nu naar een letter/cijfer.
 
-	for(const char* pointer = string;isalnum(*pointer) || isspace(*pointer) || *pointer == '(';pointer++){
+	for(const char* pointer = string;isalnum(*pointer) || isspace(*pointer) || *pointer == '(';pointer++,index++){
 		if(*pointer == '('){
-		results.index2 = index; 
+		results.index2 = index;//index2 wijst nu naar '(' (begin van argumenten van de functie
 		return true;
 		}
 	}
+	results.index2 = 0;
 	return false;
 }
 
@@ -127,4 +128,40 @@ function* Strip::findFunction(const char* string){
 
 		}
 	return 0;
+}
+
+dataType** Strip::findFuncArgs(const char* functionArgs){
+	dataType* argArray[20];
+	int functionDepth = 0; //0 == we zijn niet in een andere functie
+	for(functionArgs;*functionArgs == '(' || *functionArgs == ' ';functionArgs++){}
+	//wijzen we naar het eerste argument?
+	
+
+	for(int i = 0;;i++){
+		if(functionArgs[i] == '(')
+			functionDepth++;
+		else if(functionArgs[i] == ')'){
+			if(functionDepth == 0)
+				break;
+			functionDepth--;//zitten wij binnen een andere functie?
+		}
+
+		if(GMSisFunction(functionArgs)){
+			function* funcArg = findFunction(functionArgs);
+			if(funcArg != 0){
+				functionDepth++;// het zoeken van de argumenten
+				argArray[i] = funcArg->exec(findFuncArgs(&functionArgs[results.index2]));
+			}
+		}
+		//else if isObjectMember(functionArgs){}
+		else argArray[i] = GMSfindVar(&functionArgs[strip.results.index2],0);
+
+		//zoek voor komma ',' en zet pointer op de argument daarna
+		int temp = findCharRetIndex(&functionArgs[i],',');
+		if(temp != -1)
+			i += temp;
+
+		for(;isalnum(functionArgs[i]);i++){}//laat pointer naar volgende arg wijzen.
+	}
+	return argArray;
 }
