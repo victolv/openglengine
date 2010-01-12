@@ -1,1 +1,0 @@
-void printString(int x, int y,char* thestring);
